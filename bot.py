@@ -68,7 +68,7 @@ async def cmd_start(message: types.Message):
     if is_admin(message.from_user.id):
         text += (
             "\n"
-            "3️⃣ 🔄 **Сброс рейтинга:** команда /reset_coins — обнуляет все SCN коины у участников и топ.\n"
+            "3️⃣ Сброс рейтинга: команда /reset_coins — обнуляет все SCN коины у участников и топ.\n"
         )
 
     keyboard = InlineKeyboardMarkup(

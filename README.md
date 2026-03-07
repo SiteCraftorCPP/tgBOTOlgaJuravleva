@@ -89,12 +89,37 @@ python bot.py
 nohup venv/bin/python bot.py >> bot.log 2>&1 &
 ```
 
-Обновление бота с GitHub (после правок в репо):
+Конфиг в репозитории уже настроен на прод: токен, Chat id и два админа (480110890, 6933111964). На VPS достаточно создать `.env` при первом деплое (или положиться на дефолты из `config.py`).
+
+---
+
+## Обновление (команды для обновы)
+
+### Локально: отправить изменения в GitHub
+
+Из папки проекта на своём ПК:
+
+```bash
+cd "C:\Users\MOD PC COMPANY\Desktop\tgBOTOlgaJuravleva"
+git add .
+git commit -m "описание правок"
+git push origin main
+```
+
+### На VPS: подтянуть обновления и перезапустить бота
 
 ```bash
 cd ~/bots/tgBOTOlgaJuravleva
 git pull origin main
-# Перезапустить бота (убить старый процесс и снова запустить в screen/nohup)
-```
+# Перезапустить бота:
+# Если через screen:
+screen -r scnbot
+# В сессии: Ctrl+C (остановить бота), затем снова:
+# source venv/bin/activate
+# python bot.py
+# Отключиться: Ctrl+A, D
 
-Конфиг в репозитории уже настроен на прод: токен, Chat id и два админа (480110890, 6933111964). На VPS достаточно создать `.env` при первом деплое (или положиться на дефолты из `config.py`).
+# Если через nohup — найти процесс, убить, запустить заново:
+# pkill -f "python bot.py"
+# nohup venv/bin/python bot.py >> bot.log 2>&1 &
+```

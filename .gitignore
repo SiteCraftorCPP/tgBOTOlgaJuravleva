@@ -1,0 +1,30 @@
+# Секреты и окружение
+.env
+.env.local
+*.env
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.so
+.eggs/
+*.egg-info/
+*.egg
+
+# База бота (локальная)
+bot_database.db
+*.db
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Логи (по желанию)
+*.log

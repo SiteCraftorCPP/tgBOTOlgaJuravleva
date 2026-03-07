@@ -45,7 +45,7 @@ async def get_top_users(limit: int = 10):
             return await cursor.fetchall()
 
 async def reset_all_balances():
-    """Обнуляет баланс SCN коинов у всех участников."""
+    """Удаляет всех участников из таблицы — рейтинг и коины обнуляются полностью."""
     async with aiosqlite.connect(DB_NAME) as db:
-        await db.execute('UPDATE users SET balance = 0')
+        await db.execute('DELETE FROM users')
         await db.commit()

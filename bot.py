@@ -135,8 +135,8 @@ async def cmd_reset_coins(message: types.Message):
     await database.reset_all_balances()
     await message.answer(
         "🔄 **Сброс выполнен!**\n\n"
-        "💎 Все SCN коины у участников обнулены.\n"
-        "🏆 Рейтинг (/top) начинается заново — можно начислять коины с чистого листа! ✨",
+        "💎 Все SCN коины обнулены, таблица участников очищена.\n"
+        "🏆 Рейтинг (/top) пустой — участники появятся снова, когда админ начислит им коины. ✨",
         parse_mode="Markdown"
     )
 

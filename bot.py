@@ -1,6 +1,7 @@
 import logging
 import asyncio
 from aiogram import Bot, Dispatcher, types, F
+from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, InputFile
 from aiogram.filters import Command
 from aiogram.fsm.storage.memory import MemoryStorage
@@ -12,14 +13,19 @@ import pytz
 import re
 import os
 
-from config import BOT_TOKEN, ADMIN_IDS, CHAT_ID
+from config import BOT_TOKEN, ADMIN_IDS, CHAT_ID, TELEGRAM_PROXY_URL
 import database
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
 
-# Инициализация
-bot = Bot(token=BOT_TOKEN)
+# Инициализация (опционально через TELEGRAM_PROXY в .env — для локального теста)
+if TELEGRAM_PROXY_URL:
+    _session = AiohttpSession(proxy=TELEGRAM_PROXY_URL)
+    bot = Bot(token=BOT_TOKEN, session=_session)
+    logging.info("Telegram API через прокси: %s", TELEGRAM_PROXY_URL.split("@")[-1] if "@" in TELEGRAM_PROXY_URL else TELEGRAM_PROXY_URL)
+else:
+    bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(storage=MemoryStorage())
 scheduler = AsyncIOScheduler(timezone=pytz.timezone('Europe/Moscow'))
 
@@ -436,9 +442,11 @@ async def on_startup(bot: Bot):
 
 async def main():
     dp.startup.register(on_startup)
-    # Удаляем вебхуки и запускаем поллинг
-    await bot.delete_webhook(drop_pending_updates=True)
-    await dp.start_polling(bot)
+    try:
+        await bot.delete_webhook(drop_pending_updates=True)
+        await dp.start_polling(bot)
+    finally:
+        await bot.session.close()
 
 if __name__ == "__main__":
     try:

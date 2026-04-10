@@ -15,6 +15,15 @@ pip install -r requirements.txt
 python bot.py
 ```
 
+### Прокси (локальное тестирование)
+
+В `.env` задайте `TELEGRAM_PROXY` (если пусто — запросы идут напрямую, как на VPS):
+
+- `socks5://user:pass@host:port` или `http://host:port`
+- либо формат `host:port:user:pass` (как в панелях прокси)
+
+После изменения зависимостей: `pip install -r requirements.txt` (нужен пакет `aiohttp-socks`).
+
 ## Пуш в GitHub и загрузка на VPS
 
 ### 1. Пуш в репозиторий (с локальной машины)
